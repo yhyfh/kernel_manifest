@@ -1,0 +1,41 @@
+#此工作流将对拉取请求进行分类，并根据
+在拉请求中修改的路径数。
+#
+#要使用此工作流程,您需要设置一个。github/labeler.yml
+#带配置的文件。有关更多信息，请参见:
+# https://github.com/actions/labeler
+
+名字: Labeler
+在: [pull_request_target]
+
+工作:
+标签:
+
+连续运行: ubuntu-latest
+许可:
+内容: read
+拉式请求: write
+
+步伐:
+    - 使用: actions/labeler@v4
+随着:
+回购令牌: “${{机密。GITHUB_TOKEN }} "
+- name:下载一个构建工件
+用途:操作/下载-工件@v4.3.0
+使用:
+#要下载的工件的名称。如果未指定，则下载运行的所有工件。
+名称:#可选
+要下载的工件的# IDs，以逗号分隔。可以使用输入‘artifact-ids’或‘name ’,但不能同时使用两者。
+工件ids可选
+#目标路径。支持基本波浪号扩展。默认为$GITHUB_WORKSPACE
+路径:#可选
+#与应该下载的工件相匹配的glob模式。如果指定了名称，则忽略。
+模式:#可选
+#当多个工件匹配时，这将改变目标目录的行为。如果为true，下载的工件将位于path指定的同一目录中。如果为false，下载的工件将被提取到指定路径下的单独命名目录中。
+merge-multiple: #可选，默认值为false
+#用于GitHub API认证的GitHub令牌。当从不同的存储库或不同的工作流运行中下载工件时，这是必需的。如果未指定，该操作将尝试从当前存储库和当前工作流运行中下载工件。
+github-token: #可选
+#存储库所有者和存储库名称通过“/”连接在一起。如果指定了github-token，那么这就是将要下载工件的存储库。
+repository: #可选，默认为${{ github.repository }}
+#从其上载所需下载工件的工作流运行的id。如果指定了github-token，这就是工件将被下载的运行。
+run-id: #可选，默认值为${{ github.run_id }}
